@@ -1,47 +1,40 @@
 ---
 doc: shipping
-status: in-progress
+status: published
 ---
 
-# Shipping Record
+# Repository Publication Record
 
-## Readiness
+## Result
 
-Scope, PRD, spec and build order are approved. All implementation slices, final readiness confirmation and the learning wrap-up/app map are complete.
+Public repository: [carrier-pigeon-san/versusverse-compare](https://github.com/carrier-pigeon-san/versusverse-compare).
 
-Shipping verification: `npm run lint`, `npm run check`, `npm run check:render` and `npm run build` passed. Existing local Vite server returned the VersusVerse entry page at http://127.0.0.1:5173/. Browser interaction was not automated; prior learner readiness confirmation is recorded in checklist.md.
+The learner explicitly authorized making the code and included Git history public. The existing `carrier-pigeon-san/versusverse` repository contained earlier commits and was preserved. A new public `versusverse-compare` repository was created, connected as `origin`, and `main` was pushed with its full included history. No force push or history rewrite was used.
 
-## Publication Preparation
+Anonymous GitHub API requests verified public visibility, expected app/planning files, excluded private files and a remote commit matching local HEAD at initial publication. The repository link is also recorded in spec.md and its HTML companion.
 
-No Git remote or saved repository/video URL exists. GitHub CLI is not installed and no GitHub connector is available in this session. The learner subsequently authorized creation of a public GitHub repository and publication of its code and included history. Creation and push are pending GitHub sign-in. Video upload and Devpost submission are not requested.
+## Verification and Privacy
 
-Tracked paths and all five existing commits were inspected for publication. The private learner profile, .env and local credential/configuration directories have not been committed. No private-key, GitHub-token, AWS-access-key or credential-assignment pattern matches were found in 169 file snapshots. This pattern scan is not a guarantee against every possible secret. Public planning artifacts were reviewed as technical project context. Untracked agent/tool directories and skills-lock.json are unrelated and must remain out of the intended publication set. Recheck additions and history immediately before pushing. Preserve the private learner profile exclusion.
+Before publication, all seven local commits were checked: 243 file snapshots with no private-key, GitHub-token, AWS-access-key or credential-assignment pattern matches. Tracked project content and included planning documents were reviewed. Pattern checks do not guarantee detection of every possible secret.
 
-Public repository creation and push are explicitly authorized by the learner. Included source, plans and Git history (including commit metadata) will become publicly readable. Keep the learner profile excluded. No license is selected; preserve the existing licensing state rather than blocking ordinary repository publication on a hackathon recommendation.
+The private learner profile, .env files, local credentials and unrelated agent/tool files were excluded from publication and its history. The local learner profile remains ignored. Existing Git author/commit metadata is part of the authorized public history. No new open-source license was selected.
 
-## Submission Target Needs Confirmation
+Existing checks passed during shipping: `npm run lint`, `npm run check`, `npm run check:render`, and `npm run build`. The local Vite server returned the app successfully. Browser interaction was not automated; final learner readiness confirmation is recorded in checklist.md. Publication changed documentation and Git configuration, not application behavior.
 
-Checked official pages:
+## Scope Completed
+
+- [x] Confirm explicit public-publication authorization.
+- [x] Review intended files and included history; exclude private context and credentials.
+- [x] Create the public repository and push code/history.
+- [x] Verify anonymous repository access and expected contents.
+- [x] Record the repository URL with the technical sharing instructions.
+
+## Hackathon Work Not Pursued
+
+The learner confirmed that the deadline had passed and narrowed shipping to GitHub publication only. No demo video, exit survey, live deployment or Devpost submission was requested or performed. This record marks repository publication complete; it does not claim hackathon submission.
+
+Official pages checked earlier:
 - https://learn-ai-basics.devpost.com/
 - https://learn-ai-basics.devpost.com/rules
 
-The page says the hackathon has ended. Rules list an October 26, 2026, 5 pm Eastern submission deadline, before this shipping session. Ask the learner for the edition/submission page they are actually using before claiming submission is possible. No authenticated submission form or exit-survey prompts are available; do not invent fields.
-
-The overview describes a 1–3 minute video; rules say less than three minutes and publicly visible on YouTube or Vimeo. Keep below three minutes if this is the applicable edition. Official rules accept public GitHub, GitLab or Bitbucket repositories, broader than the skill's GitHub wording, and recommend an open-source license. Carry the learner's GitHub plan unless they choose otherwise. Verify the applicable form if another edition is supplied.
-
-## Current Publication Scope
-
-The learner confirmed no prior shipping work and chose to publish the GitHub repository only because the hackathon deadline passed. No demo video, exit survey, deployment or Devpost submission is required for this narrowed task. The historical hackathon checklist below is retained for reference, not as a completion gate.
-
-GitHub sign-in is required before repository creation. Intended repository name: `versusverse`, under the account authenticated by the learner. Publication history was rechecked: six commits, 206 file snapshots, no credential-pattern matches.
-
-## Original Hackathon Checklist (Not Pursued)
-
-- [ ] Confirm the applicable submission page and current form/video constraints.
-- [ ] Obtain an accessible short video showing the working discovery → opposing reasoning → position change journey and result; verify access without authentication.
-- [ ] Publish and verify a public repository after explicit authorization, keeping private context excluded; resolve license choice.
-- [ ] Learner writes project name, short description and all required submission answers.
-- [ ] Learner completes the required exit survey.
-- [ ] Learner submits on Devpost and confirms completion.
-
-Deployment and peer feedback are optional. A deployed app cannot replace the video. The learner owns narration and submission copy; assistance is limited to useful questions, gap identification and spelling/grammar corrections to their own writing. No submission text has been drafted.
+Those pages listed the edition as ended with an October 26, 2026 submission deadline. Their historical video/form requirements do not block the learner’s repository-only publication task.

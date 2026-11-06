@@ -54,6 +54,10 @@ Open `http://127.0.0.1:5173/#/`. Keep this origin consistent: changing host, pro
 
 Record discovery → choose → read opposing argument → helpful → contribute → change position → refresh in about one minute. Use a clean browser profile for the initial-results-locked view. Submission requires a short demo video and a public GitHub repository. Deployment is optional; no hosting target selected. These startup commands describe planned build scripts, not an existing implementation.
 
+### Public Repository
+
+Published source and included Git history: [carrier-pigeon-san/versusverse-compare](https://github.com/carrier-pigeon-san/versusverse-compare). Anonymous access verified. The existing `versusverse` repository was preserved; this project uses `versusverse-compare`. The learner chose repository publication only after the hackathon deadline; no video, deployment or Devpost submission was performed.
+
 ## Look and Feel
 
 Implements `prd.md > Look and Feel` and `prd.md > Screens and Layout`.
