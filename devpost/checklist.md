@@ -31,7 +31,7 @@ Technical blueprint and build order approved by the learner. We build in slices:
   Learner check: Choose a position and refresh at the same origin. Confirm selection and results return; navigate back and reopen. Review the concise seed-versus-visitor and restore-before-save explanation against the actual files.
   Commit: `Restore visitor state and handle local storage failures`
 
-- [ ] **3. Mark useful reasoning and contribute your own argument**
+- [x] **3. Mark useful reasoning and contribute your own argument**
   Becomes usable: The complete persistent journey: helpful toggles, validated independent contributions and reconsideration, across mobile and desktop.
   Why now: Builds on proven voting and persistence. Completes participation without adding infrastructure or obscuring the core kernel.
   PRD ref: `prd.md > Read Arguments and Mark Helpful`, `prd.md > Contribute an Argument`, `prd.md > The Core Journey`, `prd.md > States and Boundaries`
