@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VersusVerse — App Map</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fff9ec;color:#181818;font:16px/1.65 system-ui,sans-serif}main{max-width:920px;margin:auto;padding:30px 22px}h1,h2{line-height:1.2}h1{font-size:44px;letter-spacing:-2px}h2{margin-top:35px;font-size:23px}.badge{background:#ffe600;border:2px solid;padding:5px 10px;font-size:12px;font-weight:800}.flow{display:grid;gap:12px;margin:25px 0}.step{border:2px solid;padding:16px;background:#fffdf7;box-shadow:4px 4px 0}.step:nth-child(2){background:#2455e6;color:white}.arrow{text-align:center;font-weight:800}code{font-size:.87em;overflow-wrap:anywhere}pre{padding:16px;border:2px solid;overflow:auto;background:#eee9dd}a{color:#163bab}a:focus-visible,summary:focus-visible{outline:3px solid #2455e6;outline-offset:4px}details{border:2px solid;padding:15px;margin:12px 0}summary{cursor:pointer;font-weight:800}.note{font-size:13px;color:#5d574c}li{margin:10px 0}
+</style>
+<main>
+<span class="badge">BUILD COMPLETE · REFERENCE MAP</span>
+<h1>Small pieces.<br>One clear data flow.</h1>
+<p>VersusVerse lets a visitor read both sides of Rust vs. C++, choose a position, contribute reasoning and reconsider. React components show the interface; one app-owned hook controls visitor data. Fixed demonstration content lives separately.</p>
+<p class="note">Source snapshot: <code>6370064</code> (implementation <code>89ba9c4</code>). This offline reference can drift as code changes. The route below is a reference, not a claim that an interactive code tour took place.</p>
+<h2>Follow a helpful mark</h2>
+<div class="flow" aria-label="Helpful interaction data flow">
+<div class="step"><strong>1. A visitor presses Helpful</strong><br><code>src/components/ArgumentList.tsx</code> — <code>ArgumentList</code> calls <code>onToggleHelpful(argument.id)</code>.</div>
+<div class="arrow" aria-hidden="true">↓ action through props</div>
+<div class="step"><strong>2. The hook replaces visitor data</strong><br><code>src/hooks/useVisitorState.ts</code> — <code>toggleHelpful</code> adds/removes an ID using a functional update. Its saving effect sends the new snapshot to <code>saveVisitorData</code>.</div>
+<div class="arrow" aria-hidden="true">↓ React renders derived values</div>
+<div class="step"><strong>3. A new helpful count appears</strong><br><code>src/lib/derive.ts</code> — <code>deriveArguments</code> creates new display objects: seed base count + 1 when locally marked. The sample content remains unchanged.</div>
+</div>
+<details open><summary>Why restoration does not overwrite your saved choice</summary><p><code>useVisitorState</code> lazily calls <code>loadVisitorData</code> before rendering visitor data. The saving effect therefore receives the restored object from its first run. <code>src/lib/storage.ts</code> validates fields and catches storage failures. An unavailable store leaves the current session interactive.</p></details>
+<h2>To change this, start here</h2>
+<ul>
+<li>Question, context, fictional sample arguments or initial vote counts: <code>src/data/comparison.ts</code> — <code>comparison</code>, <code>seedArguments</code>, <code>seedCounts</code>.</li>
+<li>Contribution validation or feedback: <code>src/components/ArgumentForm.tsx</code> — <code>ArgumentForm</code>.</li>
+<li>Visual theme and responsive layout: <code>src/styles.css</code>.</li>
+<li>Feed/discussion navigation or shared hook ownership: <code>src/App.tsx</code> — <code>App</code>.</li>
+</ul>
+<h2>A practice to reuse</h2>
+<p>Turn a requirement into an observable invariant before building. Here, changing sides must keep total participation at 101, and a helpful toggle must leave the seed unchanged. <code>src/lib/domain-checks.ts</code> asserts both kinds of behavior. Separately, <code>scripts/render-checks.mjs</code> checks restored content and visible UI states. On another project, this separation helps distinguish incorrect data calculations from rendering problems.</p>
+<p class="note">Automated assertions passed. Server rendering does not exercise browser clicks, effect timing, focus or responsive layout. The learner confirmed the proof of concept ready; no detailed browser test report was supplied.</p>
+<h2>Run it again</h2>
+<pre><code>npm ci
+npm run dev -- --host 127.0.0.1 --port 5173 --strictPort</code></pre>
+<p>Open <a href="http://127.0.0.1:5173/#/">http://127.0.0.1:5173/#/</a>. Keep the same origin to retain the same browser storage.</p>
+<pre><code>npm run lint
+npm run check
+npm run check:render
+npm run build</code></pre>
+<p>Canonical plans: <a href="spec.md">technical specification</a> · <a href="checklist.md">build record</a>. Submission preparation is next: short demo video and public GitHub repository; deployment is optional.</p>
+</main>
+</html>

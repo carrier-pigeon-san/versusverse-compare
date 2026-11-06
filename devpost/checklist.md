@@ -43,28 +43,28 @@ Technical blueprint and build order approved by the learner. We build in slices:
 
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — after slice 1, layout/core-flow feedback resolved before later slices
-- [ ] Final kick-the-tires exploration and feedback completed — after slice 3
+Early checkpoint deferred to the completed app per the learner’s time-constrained instruction; no early inspection is claimed.
+- [x] Final feedback received — learner explicitly confirmed the proof of concept ready; no revisions requested and no detailed browser test report supplied.
 
-Per the learner’s time-constrained instruction to proceed and report only blockers, the early hands-on check is deferred to the completed app. It remains unchecked: no learner inspection is claimed. Automated verification still runs before every slice commit; final hands-on review remains pending.
+Per the learner’s time-constrained instruction to proceed and report only blockers, the early hands-on check is deferred to the completed app. No early learner inspection is claimed. Automated verification ran before every slice commit; final readiness was explicitly confirmed by the learner.
 
 ## Final Review
 
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Final review complete — no revisions requested; learner explicitly confirms ready to ship
 
-After the learner explores, record agreed revisions here as unchecked tasks; verify, commit and have them retry each affected behavior. No findings have been reported yet.
+Outcome: learner said “I can confirm that the proof of concept is ready.” No additional changes requested. Prior automated checks passed; no source changes since those checks. Browser-specific testing limitations remain documented.
 
 ## Code Tour and App Map
 
-- [ ] Learning activity complete — focused investigation of immutable seed/local display data and restore-before-save behavior using finished code and verification evidence
-- [ ] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
+- [x] Learning wrap-up complete — concise evidence-based recap and reference map, honoring the request to prioritize implementation over further exercises
+- [x] Optional edit and transfer reflection addressed — omitted as nonessential under the learner’s request to report only blockers/necessary decisions
+- [x] `devpost/app-map.html` generated from finished code, statically checked and linked, including a project-grounded practice to reuse
 
-Activity and evidence: Pending implementation; use actual assertions and code rather than claiming learning from this plan.
-Route and stops: Planned hook → storage validator/effect → derivation utility; replace with actual paths/symbols after implementation.
-Edit outcome: Not yet offered.
-Reflection: Not yet offered; personal answers belong in the ignored learner profile.
-Activity mode: Planned focused investigation tied to the learner's stated questions.
+Activity and evidence: Brief recap connects immutable seed/local display data and lazy restoration to passed assertions in src/lib/domain-checks.ts and scripts/render-checks.mjs. This is a recap, not a claim of hands-on code practice or demonstrated mastery.
+Route and stops: Reference only: src/components/ArgumentList.tsx (ArgumentList) → src/hooks/useVisitorState.ts (toggleHelpful and saving effect) → src/lib/derive.ts (deriveArguments). Restoration reference: src/lib/storage.ts (loadVisitorData).
+Edit outcome: Not applicable; optional exercise omitted to honor time constraints.
+Reflection: Optional question omitted to honor the learner’s request to avoid nonessential questions; no personal reflection inferred.
+Activity mode: Evidence-based recap with offline reference map; no interactive tour claimed.
 
 ## Revisions
 
@@ -78,4 +78,6 @@ Activity mode: Planned focused investigation tied to the learner's stated questi
 - Added npm run check:render using existing Vite/React dependencies to verify rendered component states without a test library. This checks markup and lazy restoration, not DOM events or effect timing; no browser interaction is claimed.
 
 - Slice 3 verification: npm run lint, npm run check, npm run check:render and npm run build all passed. Domain/storage assertions cover immutable seed data, helpful derivation, contribution labels, trimmed length boundaries and recovery. Rendered checks cover first-visit locking, all selected positions, independent form availability, restored local arguments, escaped text and recovery warnings. Development and production-preview HTTP requests both succeeded. DOM submit events, rapid-click behavior, actual refresh/effects, history, keyboard and responsive appearance remain explicitly unverified without browser tooling.
-- Implementation is ready for final hands-on review. No learner feedback, readiness confirmation, or completed learning wrap-up is claimed.
+- Implementation was presented for final review; subsequent learner confirmation closes readiness. The wrap-up is a concise recap and map, rather than an additional exercise.
+
+- Final learner confirmation received with no revisions requested; recorded readiness and generated the offline app map from source snapshot 6370064. No application source changes or additional test runs were necessary for this documentation-only closeout.
