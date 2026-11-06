@@ -44,3 +44,20 @@ const blocked = { getItem: (): string | null => { throw Error('denied') }, setIt
 assert.equal(loadVisitorData(blocked).warning, SAVING_WARNING)
 assert.equal(saveVisitorData(stored as import('../types.js').VisitorData, blocked), SAVING_WARNING)
 console.log('Storage checks passed: field recovery, record filtering, restore before save, idempotent writes and storage failures.')
+
+const visitorWithArgument = validateVisitor(stored).visitor
+const combined = deriveArguments(visitorWithArgument)
+assert.equal(combined.find(a => a.id === 'seed-rust-1')?.helpful, 19)
+assert.equal(combined.find(a => a.id === 'local-test')?.helpful, 1)
+assert.equal(combined.find(a => a.id === 'local-test')?.author, 'You')
+assert.equal(combined.find(a => a.id === 'local-test')?.label, 'Your argument')
+const unmarked = deriveArguments({ ...visitorWithArgument, helpfulIds: [] })
+assert.equal(unmarked.find(a => a.id === 'seed-rust-1')?.helpful, 18)
+assert.equal(unmarked.find(a => a.id === 'local-test')?.helpful, 0)
+assert.equal(snapshot, JSON.stringify({ seedArguments, seedCounts }), 'Helpful displays never mutate seeds')
+for (const length of [9, 10, 1000, 1001]) {
+ const result = validateVisitor({ ...stored, arguments: [{ ...validArgument, text: `  ${'a'.repeat(length)}  ` }] })
+ assert.equal(result.visitor.arguments.length, length >= 10 && length <= 1000 ? 1 : 0)
+}
+assert.equal(deriveResults(visitorWithArgument.position).total, 101, 'Arguments and marks do not add votes')
+console.log('Argument checks passed: derived helpful counts, immutable seeds, local labels and trimmed length boundaries.')

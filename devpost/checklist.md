@@ -21,7 +21,7 @@ Technical blueprint and build order approved by the learner. We build in slices:
   Learner check: Start the documented dev command, open http://127.0.0.1:5173/#/, explore the discussion, choose Rust then C++, and confirm the total stays 101. Read both sides and comment on the layout and reconsideration flow.
   Commit: `Build discovery and reconsideration journey`
 
-- [ ] **2. Your position survives refresh, with graceful storage recovery**
+- [x] **2. Your position survives refresh, with graceful storage recovery**
   Becomes usable: Returning visitors retain their choice and unlocked results; corrupt or unavailable storage does not stop participation.
   Why now: Tests the learner's initialization uncertainty before adding more persistent interactions, using the working vote journey as evidence.
   PRD ref: `prd.md > Choose and Reconsider a Position`, `prd.md > States and Boundaries`
@@ -74,3 +74,8 @@ Activity mode: Planned focused investigation tied to the learner's stated questi
 - npm audit reports seven moderate findings from one minimatch advisory in the development-only TypeScript ESLint dependency chain; no runtime dependency findings. Do not apply the suggested forced downgrade during this time-constrained POC.
 
 - Slice 2 verification: lint, production build and storage assertions passed for missing/corrupt data, valid-field retention, record filtering, read-only initialization, repeated snapshot writes and read/write exceptions. Actual browser Strict Mode refresh remains a hands-on check.
+
+- Added npm run check:render using existing Vite/React dependencies to verify rendered component states without a test library. This checks markup and lazy restoration, not DOM events or effect timing; no browser interaction is claimed.
+
+- Slice 3 verification: npm run lint, npm run check, npm run check:render and npm run build all passed. Domain/storage assertions cover immutable seed data, helpful derivation, contribution labels, trimmed length boundaries and recovery. Rendered checks cover first-visit locking, all selected positions, independent form availability, restored local arguments, escaped text and recovery warnings. Development and production-preview HTTP requests both succeeded. DOM submit events, rapid-click behavior, actual refresh/effects, history, keyboard and responsive appearance remain explicitly unverified without browser tooling.
+- Implementation is ready for final hands-on review. No learner feedback, readiness confirmation, or completed learning wrap-up is claimed.

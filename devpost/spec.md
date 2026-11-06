@@ -158,9 +158,11 @@ versusverse/
 ├── tsconfig.json                  # Scaffold TypeScript references
 ├── tsconfig.app.json              # Browser TypeScript settings
 ├── tsconfig.node.json             # Tool configuration typing
+├── tsconfig.checks.json           # Compile the standalone domain checks
 ├── eslint.config.js               # Scaffold lint checks
 ├── .gitignore                     # Generated files, private context, secrets
 ├── README.md                      # Setup, demo boundary and commands
+├── scripts/render-checks.mjs       # Component rendering assertions (no browser simulation)
 ├── src/
 │   ├── main.tsx                   # React root and StrictMode
 │   ├── App.tsx                    # Shared state owner, hash route and shell

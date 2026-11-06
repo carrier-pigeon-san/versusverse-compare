@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { loadVisitorData, saveVisitorData } from '../lib/storage'
-import type { Position } from '../types'
+import type { LocalArgument, Position } from '../types'
 
 export function useVisitorState() {
   // No empty-state render precedes restoration; the initializer only reads.
@@ -19,5 +19,20 @@ export function useVisitorState() {
     setVisitor(previous => previous.position === position ? previous : { ...previous, position })
   }
 
-  return { visitor, setPosition, warning, repaired: initial.repaired }
+  const toggleHelpful = (id: string) => {
+    setVisitor(previous => ({
+      ...previous,
+      helpfulIds: previous.helpfulIds.includes(id)
+        ? previous.helpfulIds.filter(existing => existing !== id)
+        : [...previous.helpfulIds, id],
+    }))
+  }
+
+  const addArgument = (argument: LocalArgument) => {
+    setVisitor(previous => previous.arguments.some(existing => existing.id === argument.id)
+      ? previous
+      : { ...previous, arguments: [...previous.arguments, argument] })
+  }
+
+  return { visitor, setPosition, toggleHelpful, addArgument, warning, repaired: initial.repaired }
 }
