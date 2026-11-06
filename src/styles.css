@@ -535,3 +535,5 @@ footer>span:last-child {
   transition:none!important;
   scroll-behavior:auto!important}
 }
+
+.storage-warning { padding: 12px 16px; margin-top: 18px; border: 2px solid #181818; background: #ffe600; font-size: 12px; line-height: 1.7; }

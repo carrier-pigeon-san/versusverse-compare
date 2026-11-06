@@ -11,7 +11,7 @@ Technical blueprint and build order approved by the learner. We build in slices:
 
 ## Slices
 
-- [ ] **1. Discover, choose, and reconsider after reading both sides**
+- [x] **1. Discover, choose, and reconsider after reading both sides**
   Becomes usable: A styled running app where the visitor opens Rust vs. C++, reads both sides, selects a position, sees demonstration results, and changes that position without adding another participant.
   Why now: Proves the unique reconsideration kernel immediately, including real navigation and readable opposing reasoning. Bootstrapping is part of this usable behavior.
   PRD ref: `prd.md > Discover and Open a Comparison`, `prd.md > Choose and Reconsider a Position`, `prd.md > Rust vs. C++ Discussion`, `prd.md > Look and Feel`
@@ -72,3 +72,5 @@ Activity mode: Planned focused investigation tied to the learner's stated questi
 
 - Slice 1 verification: lint, TypeScript/production build, domain assertions and server-rendered UI assertions passed; Vite started on 127.0.0.1:5173. No browser automation tool or installed browser was found, so visual, history and keyboard checks remain for hands-on review.
 - npm audit reports seven moderate findings from one minimatch advisory in the development-only TypeScript ESLint dependency chain; no runtime dependency findings. Do not apply the suggested forced downgrade during this time-constrained POC.
+
+- Slice 2 verification: lint, production build and storage assertions passed for missing/corrupt data, valid-field retention, record filtering, read-only initialization, repeated snapshot writes and read/write exceptions. Actual browser Strict Mode refresh remains a hands-on check.

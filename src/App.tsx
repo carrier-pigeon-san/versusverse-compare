@@ -33,6 +33,8 @@ export default function App() {
       <span>GOOD QUESTIONS. BETTER PERSPECTIVES.</span>
     </div>
     <main>
+      {state.warning && <p className="storage-warning" role="status">{state.warning}</p>}
+      {state.repaired && <p className="storage-warning" role="status">Some saved data couldn’t be restored.</p>}
       {route === '#/comparison/rust-vs-cpp'
         ? <DiscussionPage {...state}/>
         : <DiscoveryFeed position={state.visitor.position}/>}
