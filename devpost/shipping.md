@@ -13,11 +13,11 @@ Shipping verification: `npm run lint`, `npm run check`, `npm run check:render` a
 
 ## Publication Preparation
 
-No Git remote or saved repository/video URL exists. GitHub CLI is not installed and no GitHub connector is available in this session. No repository creation, push, visibility change, video upload or Devpost submission has been authorized or performed.
+No Git remote or saved repository/video URL exists. GitHub CLI is not installed and no GitHub connector is available in this session. The learner subsequently authorized creation of a public GitHub repository and publication of its code and included history. Creation and push are pending GitHub sign-in. Video upload and Devpost submission are not requested.
 
 Tracked paths and all five existing commits were inspected for publication. The private learner profile, .env and local credential/configuration directories have not been committed. No private-key, GitHub-token, AWS-access-key or credential-assignment pattern matches were found in 169 file snapshots. This pattern scan is not a guarantee against every possible secret. Public planning artifacts were reviewed as technical project context. Untracked agent/tool directories and skills-lock.json are unrelated and must remain out of the intended publication set. Recheck additions and history immediately before pushing. Preserve the private learner profile exclusion.
 
-Repository creation/push requires explicit authorization: included source, plans and Git history (including commit metadata) become publicly readable. No license is selected; do not choose one for the learner.
+Public repository creation and push are explicitly authorized by the learner. Included source, plans and Git history (including commit metadata) will become publicly readable. Keep the learner profile excluded. No license is selected; preserve the existing licensing state rather than blocking ordinary repository publication on a hackathon recommendation.
 
 ## Submission Target Needs Confirmation
 
@@ -29,7 +29,13 @@ The page says the hackathon has ended. Rules list an October 26, 2026, 5 pm East
 
 The overview describes a 1–3 minute video; rules say less than three minutes and publicly visible on YouTube or Vimeo. Keep below three minutes if this is the applicable edition. Official rules accept public GitHub, GitLab or Bitbucket repositories, broader than the skill's GitHub wording, and recommend an open-source license. Carry the learner's GitHub plan unless they choose otherwise. Verify the applicable form if another edition is supplied.
 
-## Remaining Checklist
+## Current Publication Scope
+
+The learner confirmed no prior shipping work and chose to publish the GitHub repository only because the hackathon deadline passed. No demo video, exit survey, deployment or Devpost submission is required for this narrowed task. The historical hackathon checklist below is retained for reference, not as a completion gate.
+
+GitHub sign-in is required before repository creation. Intended repository name: `versusverse`, under the account authenticated by the learner. Publication history was rechecked: six commits, 206 file snapshots, no credential-pattern matches.
+
+## Original Hackathon Checklist (Not Pursued)
 
 - [ ] Confirm the applicable submission page and current form/video constraints.
 - [ ] Obtain an accessible short video showing the working discovery → opposing reasoning → position change journey and result; verify access without authentication.
