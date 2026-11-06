@@ -1,0 +1,5 @@
+import type { Position } from '../types'
+import { ComparisonCard } from './ComparisonCard'
+export function DiscoveryFeed({position}: {position:Position|null}) {
+ return <><section className="feed-intro"><div><span className="eyebrow">THE WORLD ISN’T ONE-SIDED.</span><h1 tabIndex={-1}>Pick a side.<br/><span className="highlight">Keep an open mind.</span></h1><p>Big questions. Different perspectives. Explore the reasoning<br className="desktop-break"/> behind both sides — and decide for yourself.</p></div><div className="curiosity-stamp" aria-hidden="true">STAY<br/>CURIOUS<span>↗</span></div></section><section className="feed-section" aria-label="Featured comparison"><div className="section-label"><h2>THE CONVERSATION STARTS HERE</h2><span>01 COMPARISON · PLENTY TO CONSIDER</span></div><ComparisonCard position={position}/></section><aside className="feed-note"><span>↔</span><p><strong>Changing your mind is part of the point.</strong><br/>Read the other side. Find a new angle. Your first take doesn’t have to be your last.</p></aside></>
+}

@@ -1,0 +1,212 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VersusVerse · Technical Blueprint</title><style>
+:root{--paper:#fff9ec;--ink:#181818;--yellow:#ffe600;--blue:#2455e6;--pink:#ff8a95}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,sans-serif}header,main{max-width:1100px;margin:auto;padding:24px}header{border-bottom:4px solid}h1,h2,h3{line-height:1.15}h1{font-size:clamp(2rem,5vw,3.5rem)}h2{margin-top:2.5rem;border-top:3px solid;padding-top:20px}h3{margin-top:2rem}a{color:#173aa8}code{font-size:.9em;overflow-wrap:anywhere}pre{background:#eee8da;border:2px solid;padding:18px;overflow:auto;line-height:1.5}pre code{overflow-wrap:normal}button,summary{font:inherit;font-weight:750;cursor:pointer}button{padding:10px 16px;border:2px solid;background:white;box-shadow:3px 3px 0;margin:4px}button[aria-pressed=true]{background:var(--yellow)}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:5px}.badge{background:var(--yellow);border:2px solid;padding:4px 10px;font-weight:800}.diagram{background:white;border:3px solid;padding:20px;margin:24px 0}.flow{display:grid;grid-template-columns:1fr 1fr;gap:14px}.box{border:2px solid;padding:16px}.seed{background:var(--blue);color:white}.visitor{background:var(--pink)}.wide{grid-column:1/-1}.arrow{text-align:center;font-weight:800}.hint{font-size:.95rem}.reveal{border:2px solid;padding:14px;background:white;margin:12px 0}.reveal p{margin-bottom:0}#step-output{border:3px solid;padding:20px;min-height:150px;background:white}table{border-collapse:collapse;display:block;overflow:auto}td{border:1px solid;padding:10px;vertical-align:top}nav{display:flex;gap:18px;flex-wrap:wrap}.read{border:2px solid;padding:15px}footer{padding:30px;border-top:3px solid;margin-top:40px}@media(max-width:600px){header,main{padding:18px}.flow{grid-template-columns:1fr}.wide{grid-column:auto}}
+</style><header><span class="badge">4-SPEC · APPROVED</span><h1>VersusVerse technical blueprint</h1><p>A small React app with one owner for visitor data and a visible path from each interaction to its files.</p><nav><a href="#architecture">Data flow</a><a href="#journey">Explore the journey</a><a href="#canonical">Full specification</a><a href="checklist.md">Build checklist (Markdown)</a></nav></header><main>
+<p class="read">Markdown is canonical: <a href="spec.md">spec.md</a>. This offline companion adds visual relationships and interactive reveals so the blueprint is faster to inspect. All essential specification content is included below. No framework, CDN, or network connection is needed.</p>
+<section id="architecture"><h2>Two sources, one derived display</h2><div class="diagram"><div class="flow"><div class="box seed"><strong>Immutable seed module</strong><br>Question · context · sample arguments<br>Fixed votes 48 / 40 / 12 · base helpful counts<br><code>data/comparison.ts</code></div><div class="box visitor"><strong>Visitor state owned by App's hook</strong><br>One position · helpful IDs · local arguments<br><code>hooks/useVisitorState.ts</code></div><div class="wide arrow">Both sources ↓ read only during calculation</div><div class="box wide"><strong>Fresh display values</strong><br><code>lib/derive.ts</code> combines arguments and calculates seed counts + visitor deltas. No seed mutation, no stored totals.</div><div class="wide arrow">↓ props render the UI · user actions ↑ update the hook</div><div class="box wide"><strong>Focused React components</strong><br>PositionSelector · ResultsDisplay · ArgumentList · ArgumentForm<br>Feed/discussion navigation: <code>#/</code> ↔ <code>#/comparison/rust-vs-cpp</code></div></div></div>
+<div class="diagram"><strong>Restore before save</strong><p>localStorage → lazy initializer → validate each field → first React render → saving effect</p><p>Interaction → new visitor state → React render → saving effect → localStorage</p><p class="hint">A read or write failure leaves the current session usable with “Changes can’t be saved in this browser.” No empty placeholder state is saved before restoration.</p></div>
+<details class="reveal"><summary>How a helpful count changes without editing seed data</summary><p>A sample argument with base helpful count 7 displays 8 when its ID belongs to the visitor's helpful list. Removing that ID displays 7 again. The seed value remains 7. Posted arguments use base 0 and author “You”. Implements <code>prd.md &gt; Read Arguments and Mark Helpful</code>; files: <code>lib/derive.ts</code>, <code>ArgumentList.tsx</code>.</p></details>
+<details class="reveal"><summary>Why a restored choice is safe on the first render</summary><p><code>useState(() =&gt; loadVisitorData())</code> synchronously restores validated data. The saving effect sees that restored state from its first run. Strict Mode may repeat the read or write; pure reads and idempotent snapshot writes do not add votes. Implements <code>prd.md &gt; States and Boundaries</code>; files: <code>hooks/useVisitorState.ts</code>, <code>lib/storage.ts</code>.</p></details></section>
+<section id="journey"><h2>Trace an interaction</h2><p>Select a step to see its responsibility, PRD behavior, and files. Without JavaScript, the full journey remains available in the specification below.</p><div id="step-buttons"></div><div id="step-output" aria-live="polite">Discover → open → choose → helpful → contribute → reconsider → restore. Read the full component and journey descriptions below.</div></section><section id="canonical"><h1 id="versusverse-compare-technical-spec">VersusVerse Compare — Technical Spec</h1>
+<h2 id="how-this-works-in-plain-language">How This Works, In Plain Language</h2>
+<p>The browser runs a React application with two screens: a discovery feed and the Rust vs. C++ discussion. App owns one visitor-state hook and passes its data and actions to the components that need them. Components display information or collect input; the hook coordinates persistent interactions.</p>
+<p>A separate seed module holds the comparison, fictional sample arguments, and fixed demonstration participation counts. Visitor data contains only the current position, helpful marks, and posted arguments. We combine these sources for display without changing the seed. Changing a position replaces the visitor&#x27;s one vote. Marking helpful adds or removes one local mark alongside a fixed sample count.</p>
+<p>The hook restores visitor data before the first render and saves subsequent state changes to localStorage. If storage fails, interactions continue in memory with “Changes can’t be saved in this browser.” Hash links switch screens without a routing library. This keeps the architecture small and its responsibilities visible.</p>
+<h2 id="the-core-journey-through-the-system">The Core Journey Through the System</h2>
+<p>Implements <code>prd.md &gt; The Core Journey</code>.</p>
+<p>1. <code>App</code> renders <code>DiscoveryFeed</code> at <code>#/</code>. <code>ComparisonCard</code> reads the seed question, featured argument, and demonstration participant total (including the visitor if they have chosen).</p>
+<p>2. The card links to <code>#/comparison/rust-vs-cpp</code>. <code>DiscussionPage</code> displays context, position controls, and both stacked argument groups. Arguments are available before a vote.</p>
+<p>3. <code>PositionSelector</code> calls <code>setPosition</code>. The hook replaces the current position; React renders the checkmark/selected label and <code>ResultsDisplay</code> derives updated totals. A null position locks results; Undecided unlocks them.</p>
+<p>4. <code>ArgumentList</code> calls <code>toggleHelpful(id)</code>. A new visitor-state value triggers a render and storage synchronization. The seed&#x27;s helpful count stays fixed.</p>
+<p>5. <code>ArgumentForm</code> validates a side and trimmed text, then calls <code>addArgument</code>. The new entry appears under its supporting side as “You” / “Your argument”; the form clears and announces “Argument posted.” Voting data is untouched.</p>
+<p>6. Selecting the other side moves the same local vote. Refresh restores visitor data before rendering; browser Back returns to the feed without discarding it.</p>
+<h2 id="stack">Stack</h2>
+<p>Learner-selected: React and TypeScript with Vite, Tailwind CSS, and Lucide React. No additional runtime libraries planned.</p>
+<table><tbody>
+<tr><td>Dependency</td><td>Purpose and documentation</td></tr>
+<tr><td>React / React DOM</td><td>Components, props, hooks; [state initializer](https://react.dev/reference/react/useState), [effects](https://react.dev/reference/react/useEffect)</td></tr>
+<tr><td>TypeScript</td><td>Straightforward domain types; [handbook](https://www.typescriptlang.org/docs/handbook/intro.html)</td></tr>
+<tr><td>Vite / React plugin</td><td>Development server and static build; [guide](https://vite.dev/guide/)</td></tr>
+<tr><td>Tailwind CSS / Vite plugin</td><td>Responsive utility styling and theme tokens; [Vite installation](https://tailwindcss.com/docs/installation/using-vite)</td></tr>
+<tr><td>Lucide React</td><td>Named icon imports, with visible text for actions; [React guide](https://lucide.dev/guide/react)</td></tr>
+<tr><td>Browser APIs</td><td>[localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), [hashchange](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event)</td></tr>
+</tbody></table>
+<p>Official documentation checked during planning. Use the supported Vite React/TypeScript scaffold and Tailwind&#x27;s Vite-plugin integration; resolve compatible stable versions during setup and commit the lockfile. Exact installed versions are not yet verified. Check Node compatibility against the chosen Vite version before installation. Keep scaffold lint tooling; no test framework or router needed solely for this POC.</p>
+<h2 id="where-it-runs-and-how-someone-tries-it">Where It Runs and How Someone Tries It</h2>
+<p>Runs in a modern browser with a local Node/npm development toolchain. Node is development tooling only; no application server or keys. Use a supported Node LTS satisfying the installed Vite engine requirements.</p>
+<p>Planned commands after implementation:</p>
+<pre><code>
+npm install
+
+npm run dev -- --host 127.0.0.1 --port 5173 --strictPort
+
+</code></pre>
+<p>Open <code>http://127.0.0.1:5173/#/</code>. Keep this origin consistent: changing host, protocol, or port uses different browser storage. <code>npm run build</code> must type-check and create <code>dist/</code>; <code>npm run lint</code> checks source. For a built preview, run <code>npm run preview -- --host 127.0.0.1 --port 4173 --strictPort</code> and open <code>http://127.0.0.1:4173/#/</code> (separate local data).</p>
+<p>Record discovery → choose → read opposing argument → helpful → contribute → change position → refresh in about one minute. Use a clean browser profile for the initial-results-locked view. Submission requires a short demo video and a public GitHub repository. Deployment is optional; no hosting target selected. These startup commands describe planned build scripts, not an existing implementation.</p>
+<h2 id="look-and-feel">Look and Feel</h2>
+<p>Implements <code>prd.md &gt; Look and Feel</code> and <code>prd.md &gt; Screens and Layout</code>.</p>
+<p>Tailwind theme tokens: warm paper <code>#FFF9EC</code>, ink <code>#181818</code>, electric yellow <code>#FFE600</code>, cobalt <code>#2455E6</code>, coral <code>#FF8A95</code>. Use ink on yellow/coral and white on cobalt, checking actual contrast during implementation. Thick ink borders, restrained offset shadows, bold system-font headings, readable system sans body, constrained content column, generous line height. No remote fonts or asset service.</p>
+<p>Feed is playful; discussion prioritizes readable text and compact controls. Mobile uses stacked cards and stacked Rust/C++ argument groups. Position controls wrap without horizontal overflow. Use semantic headings, native buttons/form controls, visible keyboard focus, explicit labels, selected text/checkmarks and <code>aria-pressed</code>. Feedback uses text; status confirmations and storage warning use polite live regions. Icons supplement labels. Both argument sections are visible without tab controls.</p>
+<h2 id="components">Components</h2>
+<h3 id="app">App</h3>
+<p>Owns <code>useVisitorState</code> once and the current hash route. Renders shared wordmark/tagline, disabled “Create Versus · Coming Soon”, minimal Compare navigation, storage warning, and the active page. Passes data/actions via props. Registers/cleans up <code>hashchange</code>; missing or unknown hashes show the feed. Uses native hash anchors for navigation and browser history. On screen changes, move focus to the page heading and reset scroll for a predictable keyboard/mobile experience. Implements <code>prd.md &gt; Discover and Open a Comparison</code> and <code>prd.md &gt; States and Boundaries</code>.</p>
+<h3 id="discoveryfeed">DiscoveryFeed</h3>
+<p>Renders the working comparison card. Optional Android/iOS and Remote/Office previews are static Coming Soon cards without links or participation figures; omit them if they threaten the core loop. Implements <code>prd.md &gt; Discovery Feed</code> and <code>prd.md &gt; Discover and Open a Comparison</code>.</p>
+<h3 id="comparisoncard">ComparisonCard</h3>
+<p>Shows Compare, Technology, consistent option colors, the exact approved question, featured argument with its side, labeled demonstration participant count, and “Explore Comparison” link. Implements <code>prd.md &gt; Discover and Open a Comparison</code>.</p>
+<h3 id="discussionpage">DiscussionPage</h3>
+<p>Composes back link, neutral context, option panels, position controls, results, both argument groups, form, and “Changed your mind? Update your position above.” Wires child props; owns no second copy of visitor state. Implements <code>prd.md &gt; Rust vs. C++ Discussion</code>.</p>
+<h3 id="positionselector">PositionSelector</h3>
+<p>Three buttons: “Choose Rust”, “Choose C++”, “Undecided”. Calls the supplied action; current selection shows checkmark, selected text, and pressed state. Clicking the same choice is a no-op. Implements <code>prd.md &gt; Choose and Reconsider a Position</code>.</p>
+<h3 id="resultsdisplay">ResultsDisplay</h3>
+<p>When position is null, show the PRD&#x27;s exact locked-results message and no distribution. Otherwise show horizontal bars and labeled percentages for three positions, with seeded-demo/local-vote disclosure and no winner. Derived counts, totals, and percentages are never persisted. Implements <code>prd.md &gt; Choose and Reconsider a Position</code>.</p>
+<h3 id="argumentlist">ArgumentList</h3>
+<p>Renders stacked “For Rust” and “For C++” sections. Each entry includes side, author, sample/visitor label, plain text, helpful count and toggle button with its selected state. Uses stable IDs and combined display objects; works before voting. Implements <code>prd.md &gt; Read Arguments and Mark Helpful</code>.</p>
+<h3 id="argumentform">ArgumentForm</h3>
+<p>Local component state holds draft side, text, attempted-submission errors and success message. Side starts unselected and is independent of position. Trim before counting/validating; accept 10–1,000 characters. On attempted submission use all exact inline messages in <code>prd.md &gt; Contribute an Argument</code>; correct each error as its field becomes valid. Preserve invalid input. Allow typing past 1,000 so over-limit feedback is reachable. Use a native form submit path with a synchronous ref guard; accept once, clear controlled inputs, and release guard after the cleared form is committed. A subsequent empty submission cannot duplicate the prior entry. Drafts are not persisted or promised across page navigation. Implements <code>prd.md &gt; Contribute an Argument</code>.</p>
+<h3 id="usevisitorstate">useVisitorState</h3>
+<p>Owns the visitor object, initialization outcome, and storage warning. Exposes current data, <code>setPosition</code>, <code>toggleHelpful</code>, and <code>addArgument</code>. Functional state updates create new arrays/objects. Generate an argument ID once in the submission event, outside state-updater callbacks; keep callbacks pure under React Strict Mode. Implements all persistent behavior in <code>prd.md &gt; Choose and Reconsider a Position</code>, <code>Read Arguments and Mark Helpful</code>, <code>Contribute an Argument</code>, and <code>States and Boundaries</code>.</p>
+<h2 id="data-model">Data Model</h2>
+<h3 id="seed-data">Seed Data</h3>
+<p><code>src/data/comparison.ts</code> exports readonly typed content: ID <code>rust-vs-cpp</code>, option names, exact question, neutral context covering the five PRD topics, featured argument ID, sample arguments and fixed counts. Implementation defaults: Rust 48, C++ 40, Undecided 12 (100 seeded participants); two short arguments per side, fictional names, stable <code>seed-*</code> IDs and nonnegative helpful base counts. These numbers and copy are illustrative content decisions, not real activity or learner opinions. Keep seed data out of localStorage and never mutate its arrays or objects.</p>
+<h3 id="visitor-data">Visitor Data</h3>
+<pre><code>
+type Side = &#x27;rust&#x27; | &#x27;cpp&#x27;;
+
+type Position = Side | &#x27;undecided&#x27;;
+
+type LocalArgument = { id: string; side: Side; text: string };
+
+type VisitorData = {
+
+  version: 1;
+
+  position: Position | null;
+
+  helpfulIds: string[];
+
+  arguments: LocalArgument[];
+
+};
+
+</code></pre>
+<p>One key: <code>versusverse:rust-vs-cpp:visitor:v1</code>. Defaults: version 1, null position, empty arrays. Local argument IDs use <code>local-</code> plus a browser-generated UUID. Author “You” and label “Your argument” are derived, not stored. The ID is stable across refresh. No identity, timestamps, or derived totals are required.</p>
+<h3 id="combining-arguments-and-helpful-counts">Combining Arguments and Helpful Counts</h3>
+<p>Build fresh display objects: seed entries map to their fixed author/text/base helpful count and “Sample content”; local entries map to author “You”, base helpful count 0 and “Your argument”. Concatenate and group by side, keeping samples in source order and local entries in insertion order. For every entry:</p>
+<p><code>displayHelpful = baseHelpful + (visitor.helpfulIds.includes(id) ? 1 : 0)</code></p>
+<p>Toggle membership in the visitor&#x27;s ID list; do not increment a seed field. Unmarking removes exactly the visitor&#x27;s one contribution. A local posted argument can also be marked helpful. Derived display objects are calculated during rendering; no extra synchronized state or memoization is necessary at this size. Implements <code>prd.md &gt; Read Arguments and Mark Helpful</code>.</p>
+<h3 id="vote-calculation">Vote Calculation</h3>
+<p>For each position: <code>count = seedCount + (visitor.position === position ? 1 : 0)</code>.</p>
+<p>Total = seed total + 1 if position is non-null, otherwise seed total. Display percentages with one decimal place; independently rounded labels can differ slightly from 100%. Bars use unrounded ratios. Selecting Rust twice remains 49/40/12 (101); switching to C++ yields 48/41/12 (101). Undecided is a real choice, distinct from null. Implements <code>prd.md &gt; Choose and Reconsider a Position</code>.</p>
+<h3 id="restore-and-save-sequence">Restore and Save Sequence</h3>
+<p>1. <code>useState(() =&gt; loadVisitorData())</code> reads/parses/validates synchronously. Return both sanitized visitor data and load outcome. The initializer only reads; it never writes or removes storage. It can safely be invoked twice by development Strict Mode.</p>
+<p>2. Validate unknown JSON at runtime. For version 1: keep a valid position independently; keep individually valid local argument records (unique <code>local-*</code> ID, valid side, trimmed 10–1,000 character text), dropping invalid/duplicate records. Deduplicate helpful IDs and retain only IDs of known seed arguments or retained local arguments. A wrong field type resets only that field. Unknown extra fields are ignored.</p>
+<p>3. Missing key uses defaults. Malformed JSON, a non-object root, or unsupported version cannot be safely interpreted: use defaults. When data is repaired/reset, show “Some saved data couldn’t be restored.” without blocking interaction. No migration machinery.</p>
+<p>4. First render already has the sanitized restored data. A <code>useEffect</code> depending on the visitor object serializes only that object and calls <code>setItem</code>. It may save the validated initial state; there is no earlier empty-state effect that could overwrite restored data. Repeated effect execution writes the same value, without changing votes or duplicating arguments.</p>
+<p>5. Actions update React state immutably. React re-renders; after commit, the effect writes the new snapshot. Catch read/write exceptions; remain interactive in memory and show exactly “Changes can’t be saved in this browser.” Failed writes must not roll back visible interactions. Later successful writes may clear the saving warning. Warning changes alone do not retrigger saves.</p>
+<p>Persistence belongs to the same browser origin. Navigating away and back within the app preserves hook state; refresh restores successful saves. Closing immediately before an effect runs is a small normal browser persistence limit. Cross-tab reconciliation and cross-device synchronization are outside the POC.</p>
+<h2 id="file-structure">File Structure</h2>
+<p>Planned authored files; build scaffold may add routine tool configuration without changing architecture.</p>
+<pre><code>
+versusverse/
+
+├── index.html                     # Vite entry and page metadata
+
+├── package.json                   # dev/build/preview/lint scripts
+
+├── package-lock.json              # Reproducible dependency resolution
+
+├── vite.config.ts                 # React and Tailwind Vite plugins
+
+├── tsconfig.json                  # Scaffold TypeScript references
+
+├── tsconfig.app.json              # Browser TypeScript settings
+
+├── tsconfig.node.json             # Tool configuration typing
+
+├── eslint.config.js               # Scaffold lint checks
+
+├── .gitignore                     # Generated files, private context, secrets
+
+├── README.md                      # Setup, demo boundary and commands
+
+├── src/
+
+│   ├── main.tsx                   # React root and StrictMode
+
+│   ├── App.tsx                    # Shared state owner, hash route and shell
+
+│   ├── styles.css                 # Tailwind import, theme and base styles
+
+│   ├── types.ts                   # Side, Position, seed and visitor types
+
+│   ├── data/comparison.ts         # Immutable comparison and sample content
+
+│   ├── hooks/useVisitorState.ts   # Actions and persistence effect
+
+│   ├── lib/storage.ts             # Pure validation plus guarded load/save
+
+│   ├── lib/derive.ts              # Display arguments and vote calculations
+
+│   ├── lib/domain-checks.ts       # Small runnable assertions for data invariants
+
+│   └── components/
+
+│       ├── DiscoveryFeed.tsx      # Working card and optional static previews
+
+│       ├── ComparisonCard.tsx     # Discovery summary and hash link
+
+│       ├── DiscussionPage.tsx     # Discussion composition and context
+
+│       ├── PositionSelector.tsx   # Three choices and selected feedback
+
+│       ├── ResultsDisplay.tsx     # Locked message or derived distribution
+
+│       ├── ArgumentList.tsx       # Two visible groups and helpful buttons
+
+│       └── ArgumentForm.tsx       # Draft, validation and one-shot submit
+
+└── devpost/                       # Canonical plans and review companions
+
+    ├── learner-profile.md         # Private learning context; exclude from Git
+
+    ├── scope.md / scope.html
+
+    ├── prd.md / prd.html
+
+    ├── spec.md / spec.html
+
+    └── checklist.md               # Build order and verification progress
+
+</code></pre>
+<p>Generated <code>node_modules/</code> and <code>dist/</code> are ignored. Existing agent/configuration directories are outside application implementation; preserve unrelated work.</p>
+<h2 id="external-services-and-dependencies">External Services and Dependencies</h2>
+<p>No runtime external services, API calls, credentials, paid plans, or rate limits. Package installation uses npm; icons are bundled SVG components, styles compile locally, and all comparison content ships with the app. Documentation links are in Stack. No external assets are required to run the built app.</p>
+<h2 id="important-failure-modes">Important Failure Modes</h2>
+<p>- Damaged local data: preserve valid fields/records, reset unusable fields, and report partial restoration as described above.</p>
+<p>- Storage blocked or quota exhausted: current session continues with the exact non-blocking saving warning; persistence is not promised until a write succeeds.</p>
+<p>- Invalid/repeated submission: inline PRD messages, preserved invalid draft, and submit guard prevent duplicate posting. Render text through React escaping; never inject argument HTML.</p>
+<p>- Unknown hash: feed fallback; native links remain usable. No placeholder destination for future features.</p>
+<h2 id="verification-approach">Verification Approach</h2>
+<p>Run scaffold lint and TypeScript/production build. Use a small TypeScript assertion runner (compiled with the existing TypeScript toolchain, no added test library) to verify vote replacement/idempotence, helpful derivation without seed mutation, field-level recovery, invalid record filtering and known-ID validation. Exercise storage exceptions through a small injectable storage adapter in checks; do not introduce a persistence framework.</p>
+<p>Browser checks cover locked first visit, all three positions, Back/hash refresh, both groups before voting, helpful toggles and refresh, independent contribution while unselected/Undecided, exact length boundaries 9/10/1,000/1,001 after trimming, error clearing, repeated submit clicks, successful refresh restoration, malformed saved data, and blocked/failed writes. Inspect narrow mobile and desktop layouts, keyboard focus, readable labels and the one-minute journey. Use browser tooling if available; otherwise report its absence and have the learner perform clearly named browser checks rather than claiming they ran.</p>
+<h2 id="what-was-simplified-and-why">What Was Simplified and Why</h2>
+<p>One comparison, local visitor data and labeled seed participation prove reconsideration without shared infrastructure. Props and a single hook make ownership easy to trace. Hash navigation provides browser history without a router. Stacked argument groups keep opposing reasoning visible. System fonts, bundled icons and compile-time styling keep runtime dependencies limited. Previews are optional and cut first. No backend, database, authentication, external AI, live multiplayer, or comparison creation.</p>
+<h2 id="decisions-and-open-issues">Decisions and Open Issues</h2>
+<p>- Learner chose the stack and requested focused components, typed simple data, concise explanations, and no extra architectural layers.</p>
+<p>- Learner approved app-owned visitor hook, props, immutable seeds plus local deltas, hash routes, partial recovery, exact saving warning, and stacked groups.</p>
+<p>- Learner uncertainty: how helpful counts and arguments combine without seed mutation. Clarified through fresh display objects and the base-plus-one formula above; verify by assertions that seed snapshots do not change after local interactions.</p>
+<p>- Learner uncertainty: avoiding restored-data overwrite. Clarified through synchronous lazy initialization followed by the saving effect; verify a saved choice/contribution survives initial render and Strict Mode refresh.</p>
+<p>- Seed counts/copy and palette hex values above are concrete implementation defaults derived from the approved direction; they do not add product behavior.</p>
+<p>- No consequential architecture question remains. Optional hosting is deferred. Exact dependency versions and available browser-check tools must be confirmed during build setup.</p>
+<p>- Approved by the learner based on the summary and consistency checks; independent document inspection was not claimed.</p></section><footer>Review the full specification and Markdown build order. Technical blueprint and build order approved; implementation progresses in checklist.md.</footer></main><script>
+const steps=[
+['Discover','DiscoveryFeed and ComparisonCard show the seeded question and labeled demonstration participants. A native hash link opens the discussion.','Discover and Open a Comparison','App.tsx · DiscoveryFeed.tsx · ComparisonCard.tsx'],
+['Choose','PositionSelector sends one choice to the shared hook. ResultsDisplay derives fixed counts plus that single vote; null keeps results locked.','Choose and Reconsider a Position','PositionSelector.tsx · ResultsDisplay.tsx · hooks/useVisitorState.ts · lib/derive.ts'],
+['Helpful','ArgumentList toggles an ID in visitor data. Fresh display objects add one to the fixed base helpful count; seeds remain unchanged.','Read Arguments and Mark Helpful','ArgumentList.tsx · hooks/useVisitorState.ts · lib/derive.ts'],
+['Contribute','ArgumentForm checks an explicit side and 10–1,000 trimmed characters. One accepted submission adds a local argument, resets the form and leaves the vote alone.','Contribute an Argument','ArgumentForm.tsx · hooks/useVisitorState.ts'],
+['Reconsider','Choosing C++ after Rust moves the visitor vote: 49/40/12 becomes 48/41/12. Total stays 101. Both opposing argument sections remain visible.','Choose and Reconsider a Position','PositionSelector.tsx · lib/derive.ts'],
+['Restore','On refresh, lazy initialization restores valid data before any save. Field validation preserves usable data and an effect saves later changes.','States and Boundaries','hooks/useVisitorState.ts · lib/storage.ts']];
+const bar=document.getElementById('step-buttons'),output=document.getElementById('step-output');
+function show(i){bar.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',String(i===j)));output.replaceChildren();const h=document.createElement('h3');h.textContent=steps[i][0];output.append(h);for(const text of [steps[i][1],'Implements prd.md > '+steps[i][2],'Files: '+steps[i][3]]){const p=document.createElement('p');p.textContent=text;output.append(p)}}
+steps.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.textContent=(i+1)+'. '+s[0];b.setAttribute('aria-pressed','false');b.onclick=()=>show(i);bar.append(b)});show(0);
+</script></html>

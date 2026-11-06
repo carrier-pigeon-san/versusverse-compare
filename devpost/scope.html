@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>VersusVerse Compare — Scope review</title>
+<style>
+:root{--paper:#fff9ed;--ink:#191919;--blue:#234bdf;--pink:#ff8d9f;--yellow:#ffe24b}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 system-ui,sans-serif}main{max-width:1100px;margin:auto;padding:32px 24px 64px}header{border-bottom:3px solid;padding-bottom:28px}.eyebrow,.tag{font:700 12px/1.5 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.1em}.topline{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.tag{border:2px solid;padding:5px 12px;background:var(--yellow)}h1{font-size:clamp(42px,8vw,82px);line-height:1;letter-spacing:-.065em;margin:32px 0 20px;max-width:800px}h2{font-size:28px;line-height:1.2;letter-spacing:-.035em;margin:0 0 16px}h3{font-size:19px;margin:0 0 10px}p{margin:0 0 16px}.intro{max-width:720px;font-size:21px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:30px 0}.panel{border:3px solid;padding:25px;box-shadow:6px 6px 0 var(--ink);background:#fffdf7}.kernel{background:var(--blue);color:white}.kernel .eyebrow{color:var(--yellow)}.big{font-size:27px;line-height:1.35;font-weight:750;letter-spacing:-.025em}.diagram{margin:38px 0}.diagram svg{width:100%;height:auto;display:block}.caption{font-size:14px;margin-top:14px;max-width:850px}.sequence{padding-left:24px}.sequence li{padding-left:6px;margin-bottom:10px}.number{display:block;font:700 12px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}.finish{background:var(--yellow)}details{border:3px solid;margin:16px 0;background:#fffdf7}summary{cursor:pointer;padding:18px 22px;font-size:21px;font-weight:800}summary:focus-visible,a:focus-visible{outline:4px solid var(--blue);outline-offset:4px}.reveal{padding:0 24px 20px}.reveal ul{margin:0;padding-left:22px}.reveal li{margin:8px 0}.now summary{background:var(--yellow)}.later summary{background:var(--pink)}.cut summary{background:#e8e6df}.foot{margin-top:32px;padding-top:20px;border-top:3px solid;font-size:14px}a{color:var(--blue)}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{padding:6px 11px;border:2px solid;font-size:14px;font-weight:700}.blue{background:var(--blue);color:white}.pink{background:var(--pink)}@media(max-width:700px){main{padding:22px 18px 40px}.grid{grid-template-columns:1fr}.panel{padding:20px}h1{margin-top:25px}.intro{font-size:19px}}@media print{body{font-size:12px}.panel{box-shadow:none}.grid{break-inside:avoid}details{break-inside:avoid}.reveal{display:block}main{padding:0}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div class="topline"><span class="eyebrow">Build With AI · 02 / Scope review</span><span class="tag">Approved</span></div>
+<h1>VersusVerse<br>Compare.</h1>
+<p class="intro">Turn an A-vs-B question into a structured discussion where visitors take a position, explore arguments, and reconsider.</p>
+<div class="chips" aria-label="Proof of concept boundaries"><span class="chip">One seeded comparison</span><span class="chip">No registration</span><span class="chip">Saved in this browser</span></div>
+</header>
+
+<div class="grid">
+<section class="panel kernel"><p class="eyebrow">The unique kernel</p><h2>A reason to change your mind.</h2><p class="big">A visitor encounters a compelling opposing argument—and changes their position.</p><p>That moment demonstrates the central value: exploring perspectives and thinking beyond an initial preference.</p></section>
+<section class="panel"><p class="eyebrow">Who walks in?</p><h2>Curious. Opinionated. Open to another angle.</h2><p>A student, developer, or technology enthusiast arrives through an interesting comparison shared by a friend, social media, or the discovery view.</p><p>Today, those debates are scattered across threads, forums, and comments. Here, both sides and their reasoning are easy to examine without registering.</p></section>
+</div>
+
+<section class="diagram" aria-labelledby="journey-title">
+<p class="eyebrow">The idea, connected</p><h2 id="journey-title">Curiosity → participation → reconsideration</h2>
+<svg viewBox="0 0 980 370" role="img" aria-labelledby="flow-title flow-desc">
+<title id="flow-title">The visitor journey and its proof</title>
+<desc id="flow-desc">A curious visitor discovers Rust versus C++, reads arguments, takes a position, sees demo results, marks helpful reasoning and contributes, then reconsiders. The updated position and results prove the loop works. Local storage restores participation after refresh, allowing a return to the discussion.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M0 0 8 4 0 8Z" fill="#191919"/></marker></defs>
+<g stroke="#191919" stroke-width="3" fill="#fffdf7">
+<rect x="5" y="18" width="285" height="102" fill="#ffe24b"/><rect x="347" y="18" width="285" height="102"/><rect x="689" y="18" width="285" height="102" fill="#ff8d9f"/>
+<rect x="689" y="194" width="285" height="102"/><rect x="347" y="194" width="285" height="102" fill="#ffe24b"/><rect x="5" y="194" width="285" height="102"/>
+<path d="M290 69H337M632 69H679M832 120V184M689 245H642M347 245H300" fill="none" marker-end="url(#arrow)"/>
+<path d="M147 194V130" fill="none" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+</g>
+<g fill="#191919" font-family="system-ui,sans-serif" text-anchor="middle" font-size="18">
+<text x="147" y="58" font-weight="800">01 · Curious visitor</text><text x="147" y="88">Discover Rust vs. C++</text>
+<text x="489" y="58" font-weight="800">02 · Read &amp; choose</text><text x="489" y="88">Rust / C++ / Undecided</text>
+<text x="831" y="58" font-weight="800">03 · Explore &amp; contribute</text><text x="831" y="88">Results · helpful · reasoning</text>
+<text x="831" y="234" font-weight="800">04 · Reconsider</text><text x="831" y="264">An opposing argument lands</text>
+<text x="489" y="234" font-weight="800">05 · The proof</text><text x="489" y="264">Choice &amp; results update</text>
+<text x="147" y="234" font-weight="800">06 · Return</text><text x="147" y="264">Refresh restores local state</text>
+<text x="489" y="344" font-size="16">One working loop · seeded community figures clearly labeled as demo data</text>
+</g>
+</svg>
+<p class="caption">Read either side before participating. After choosing, see the position distribution, examine arguments, mark useful reasoning, and contribute. Discovering new perspectives gives visitors a reason to return.</p>
+</section>
+
+<div class="grid">
+<section class="panel"><span class="number">The one-minute demo</span><h2>“Which is better suited to new systems programming projects?”</h2><ol class="sequence"><li>Discover the Rust vs. C++ card, with a featured argument and participant count.</li><li>Open the comparison, read either side, and choose a position.</li><li>See results, mark an argument helpful, and add a short argument.</li><li>Encounter an opposing argument and change position. Watch the choice and results update.</li></ol></section>
+<section class="panel finish"><span class="number">What makes it convincing</span><h2>Real interactions. Simple persistence.</h2><p>Refresh or return in the same browser: the selected position, helpful marks, and contributed arguments are restored automatically using localStorage.</p><p>Changing position updates the existing selection. Helpful marks toggle to prevent duplicate endorsements. Community figures are seeded demonstration data, combined with the visitor’s local selection.</p><p><strong>Finish line:</strong> responsive, distinctive, reliable; demonstrable in a minute. Target 2–4 hours of active work, a short demo video, and a public GitHub repository. Deployment is optional.</p></section>
+</div>
+
+<section aria-labelledby="boundary-title"><p class="eyebrow">Keep the experiment small</p><h2 id="boundary-title">The scope boundary</h2>
+<details class="now" open><summary>Now · prove the complete loop</summary><div class="reveal"><ul><li>One seeded Rust vs. C++ comparison, a discovery card, and sample arguments.</li><li>Read both sides; select Rust, C++, or Undecided; view the demonstration distribution.</li><li>Toggle helpful marks, contribute short arguments, and change position.</li><li>Persist and restore interaction state locally in the same browser.</li><li>A responsive, visually distinctive experience with clearly labeled demo figures.</li></ul></div></details>
+<details class="later"><summary>Later · expand discovery and participation</summary><div class="reveal"><ul><li>Create and publish comparisons.</li><li>A broader discovery feed.</li><li>Everyday choices, science, education, culture, business, public issues, and other subjects beyond the seeded technology comparison.</li></ul></div></details>
+<details class="cut"><summary>Cut from this experiment · keep the infrastructure small</summary><div class="reveal"><ul><li><strong>Authentication and real accounts:</strong> registration is unnecessary to prove this loop.</li><li><strong>Databases, shared backend, and live multiplayer:</strong> local state is sufficient for the demonstration.</li><li><strong>Browser and device synchronization:</strong> same-browser persistence keeps implementation reliable and simple.</li></ul></div></details>
+</section>
+
+<div class="grid">
+<section class="panel"><p class="eyebrow">Inspiration &amp; identity</p><h2>Energetic discovery.<br>Readable discussion.</h2><p>Fun, retro-inspired, high-contrast editorial neo-brutalism. Warm off-white, near-black outlines, bold typography, electric-yellow primary actions, cobalt blue and coral pink for competing options.</p><div class="chips"><span class="chip blue">Cobalt blue</span><span class="chip pink">Coral pink</span><span class="chip" style="background:var(--yellow)">Electric yellow</span></div></section>
+<section class="panel"><p class="eyebrow">Why build this?</p><h2>Thoughtful discussion.<br>Manageable architecture.</h2><p>Encourage exposure to opposing perspectives while practicing technical specification writing and breaking application architecture into “small, manageable, easy-to-understand, and easy-to-implement functionalities.”</p></section>
+</div>
+<footer class="foot"><p><strong>Scope approved.</strong> Next: 3-prd, to define the screens and behaviors.</p><p>This is the scope review companion, not the working application. <a href="scope.md">scope.md</a> remains the canonical plan. This page works offline, with no external assets or libraries.</p></footer>
+</main>
+</body>
+</html>
